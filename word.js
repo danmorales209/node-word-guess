@@ -44,6 +44,11 @@ var Word = function () {
         });
 
     };
+
+    this.wordGuessed = function () {
+
+        return !this.letters.some( letter => !letter.guessed);
+    }
 };
 
 module.exports = Word;
