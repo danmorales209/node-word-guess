@@ -17,4 +17,4 @@ var Letter = function (character, guessed = false) {
     };
 };
 
-module.exports = Letter();
+module.exports = Letter;
