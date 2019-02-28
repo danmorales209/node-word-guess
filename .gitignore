@@ -63,3 +63,4 @@ typings/
 # Other ignores
 Images
 HomeworkInstructions.md
+package-lock.json
