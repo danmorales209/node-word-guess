@@ -1,4 +1,5 @@
 var Word = require('./word');
+var list = require('./movies');
 var Inquire = require('inquirer');
 var ChalkPipe = require('chalk-pipe');
 
@@ -7,15 +8,17 @@ var ChalkPipe = require('chalk-pipe');
 var guessMe = new Word();
 var guessesRemaining = 10;
 var guessedLetters = [];
+var index = Math.floor(Math.random() * list.movies.length);
 
-guessMe.addWord("2001: A Space Odyssey".toUpperCase());
+guessMe.addWord(list.movies[index].toUpperCase());
 
 
 function playGame() {
 
-    console.log(`Your word: ${guessMe.printWord()}  Guesses Remaining: ${guessesRemaining}`);
+    console.log(ChalkPipe('cyan.bold')(`\nYour word:\n${guessMe.printWord()}`));
+    console.log(ChalkPipe('yellow')(`\nGuesses Remaining: ${guessesRemaining}`));
 
-    console.log(guessedLetters.reduce((output, letter) => (output + letter + ' '), ""));
+    console.log(ChalkPipe('yellow.bold')('Guessed Letters:\n') + ChalkPipe('bgBlackBright.green.bold')(" " + guessedLetters.reduce((output, letter) => (output + letter + ' '), "")));
 
     if (!guessMe.wordGuessed() && (guessesRemaining > 0)) {
         Inquire
@@ -23,7 +26,7 @@ function playGame() {
                 {
                     type: "input",
                     name: "guess",
-                    message: "Please guess a letter"
+                    message: "Please guess a letter or number: "
                 }
             ]).then(function (answer) {
                 console.clear();
@@ -36,7 +39,6 @@ function playGame() {
                 }
                 else {
                     let letterInWord = guessMe.guessLetter(answer.guess.toUpperCase());
-                    console.log(letterInWord);
 
                     if (letterInWord) {
                         console.log(ChalkPipe("green.bold")("Correct!"))
@@ -50,16 +52,42 @@ function playGame() {
                     guessedLetters.push(answer.guess.toUpperCase());
                 }
 
-                console.log(`Your word: ${guessMe.printWord()}  Guesses Remaining: ${guessesRemaining}`);
-
-                console.log(guessedLetters.reduce((output, letter) => (output + letter + ' '), ""));
-
                 playGame();
 
             });
     }
     else {
-        console.log("Game Over");
+        if (guessMe.wordGuessed()) {
+            console.log(ChalkPipe('green.bold.bgBlackBright')("\n---GAME OVER---\n    You won!   "))
+        }
+        else {
+            console.log(ChalkPipe('red.bold.bgBlackBright')("\n---GAME OVER---\n   You lost... "))
+        }
+        Inquire
+            .prompt([
+                {
+                    type: "confirm",
+                    name: "newGame",
+                    message: "Would you like to play again?\n"
+                }
+            ]).then(function (response) {
+
+                if (response.newGame) {
+                    index = Math.floor(Math.random() * list.movies.length);
+                    guessMe.reset();
+                    guessMe.addWord(list.movies[index].toUpperCase());
+                    guessedLetters = [];
+                    guessesRemaining = 10;
+
+                    console.clear();
+                    playGame();
+                }
+                else {
+                    console.log(ChalkPipe('orange.bold')("Thanks for playing, see ya!"));
+                }
+
+
+            })
     }
 
 }
