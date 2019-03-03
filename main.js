@@ -85,11 +85,8 @@ function playGame() {
                 else {
                     console.log(ChalkPipe('orange.bold')("Thanks for playing, see ya!"));
                 }
-
-
             })
     }
-
 }
 
 playGame();
