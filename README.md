@@ -17,12 +17,14 @@ _A science fiction movie hangman game_
 
 ## Sample Gameplay
 
-|||
-|---------|---------|
-|![intro](img/01-entry.gif)|![correct](img/02-correct.gif)|
-|![lose](img/03-lose.gif)|![exit](img/04-exit.gif)|
+|Clip Description|Clip|
+|:-------:|:-------:|
+|Start and input validation|![intro](img/01-entry.gif)|
+|Correctly guess the word|![correct](img/02-correct.gif)|
+|Run out of guesses|![lose](img/03-lose.gif)|
+|Exit from game|![exit](img/04-exit.gif)|
 
-### Good Luck!
+# Good Luck!
 
 
 
